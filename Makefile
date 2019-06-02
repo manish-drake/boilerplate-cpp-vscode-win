@@ -2,35 +2,37 @@
 
 CC            = gcc
 CXX           = g++
-DEFINES       = 
-CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -g -MMD -std=gnu++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+DEFINES       = -DUNICODE -D_UNICODE -DWIN32
+CFLAGS        = -fno-keep-inline-dllexport -g -Wall -W -Wextra $(DEFINES)
+CXXFLAGS      = -fno-keep-inline-dllexport -g -std=gnu++11 -Wall -W -Wextra -fexceptions -mthreads $(DEFINES)
+LINK          = g++
+LFLAGS        = -Wl,-subsystem,windows -mthreads
 INCPATH       = -I.
 VPATH	      = .
-LIBS          = -lreadline
-DEL_FILE      = rm -f
-CHK_DIR_EXISTS= test -d
-MKDIR         = mkdir -p
-COPY          = cp -f
-COPY_FILE     = cp -f
-COPY_DIR      = cp -f -R
-DEBUG         = -g
-DEL_FILE      = rm -f
-SYMLINK       = ln -f -s
+QT            = C:\Qt\Qt5.9.7\5.9.7\mingw53_32
+LIBS          = -lmingw32 -L${QT}\lib
+IDC           = idc
+IDL           = midl
+ZIP           = zip -r -9
+DEF_FILE      = 
+RES_FILE      = 
+COPY          = copy /y
+QMAKE         = ${QT}\bin\qmake.exe
+SED           = $(QMAKE) -install sed
+COPY_FILE     = copy /y
+COPY_DIR      = xcopy /s /q /y /i
+DEL_FILE      = del
 DEL_DIR       = rmdir
-MOVE          = mv -f
-TAR           = tar -cf
-COMPRESS      = gzip -9f
-LINK          = g++
-LFLAGS        = 
-AR            = ar cqs
-RANLIB        = 
-SED           = sed
-STRIP         = strip
+MOVE          = move
+CHK_DIR_EXISTS= if not exist
+MKDIR         = mkdir
+INSTALL_FILE    = copy /y
+INSTALL_PROGRAM = copy /y
+INSTALL_DIR     = xcopy /s /q /y /i
 
 ####### Output directory
 
-OBJECTS_DIR   = ./build
+OBJECTS_DIR   = .\build
 ####### Files
 SOURCES       = $(wildcard *.cpp)
 SOURCEO       = $(SOURCES:.cpp=.o) 
